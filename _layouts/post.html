@@ -1,14 +1,13 @@
 ---
 layout: default
 ---
+
 <h1 class="post-headline">{{page.title}}</h1>
+<span class="post-subtitle">{{page.subtitle}}</span>
 <p class="meta"><small>{{page.date | date: '%B %d, %Y'}}</small></p>
 
 {{content}}
 
 <!-- Comments only for posts -->
-{% if page.path contains '_posts' %}
-    {% if site.disqus-shortname %}
-        {% include disqus.html %}
-    {% endif %}
-{% endif %}
+{% if page.path contains '_posts' %} {% if site.disqus-shortname %} {% include
+disqus.html %} {% endif %} {% endif %}
