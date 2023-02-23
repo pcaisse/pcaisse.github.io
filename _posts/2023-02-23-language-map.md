@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Language Map of the US"
-subtitle: "Retrospective on a Long-Running Side Project"
+subtitle: "Reflections on a Long-Running Side Project"
 ---
 
-At the end of 2022, I was very excited and proud to re-launch a side project of
-mine: [The Language Map of the United States](https://languagemap.us).
+At the end of 2022, I was very excited to re-launch a side project of mine:
+[The Language Map of the United States](https://languagemap.us).
 
 The app uses Census data to allow you to visualize what languages are spoken in
 the United States, D.C., and Puerto Rico: 
@@ -82,16 +82,18 @@ deployment was set up to make redeploying trivial.
 
 ## Lessons Learned
 
-This project was a tremendous learning experience with these being the most salient takeaways:
+This project was a tremendous learning experience with these being the most
+salient takeaways:
 
 ### If you can, make it static
 
 A static app is worlds simpler than a dynamic one. There's no database and no
 backend. In this case, the app is deployed via
 [Netlify](https://www.netlify.com/) which makes it _extremely_ easy to deploy a
-static app via a branch-based workflow for free! This approach of course requires data that doesn't change which worked well for my use case.
+static app via a branch-based workflow for free! This approach of course
+requires data that doesn't change which worked well for my use case.
 
-Of course, the inherent complexity doesn't disappear by making the app static.
+That said, the inherent complexity doesn't disappear by making the app static.
 There is some fairly involved data munging in my data pre-processing pipeline
 (read: [many bash
 scripts](https://github.com/pcaisse/language-map-us/tree/main/data/scripts)
@@ -99,6 +101,30 @@ calling out to [GDAL](https://gdal.org/) and
 [Tippecanoe](https://github.com/mapbox/tippecanoe)), some of which had been
 handled for me by Postgres/PostGIS previously. But once the vector tiles were
 baked it was smooth sailing.
+
+### Take advantage of the frontend
+
+When I think of frontend development, I often don't think of CPU-bound tasks.
+Part of this is due to prevalence of I/O-bound frontend apps out there that
+handle UI interaction, call out to APIs, and manage state (the vast majority of
+my professional frontend development experience falls into this category).
+There's also JavaScript's [single-threaded
+nature](https://developer.mozilla.org/en-US/docs/Glossary/Main_thread) which
+can cause CPU intensive tasks to tank your user experience if you're not
+careful (web workers can of course be useful here but introduce complexity).
+However, there are excellent use cases for tasks on the frontend that might
+typically be done on the backend.
+
+In the case of this app, the size of the data and the nature of the computation
+-- filtering by year and language and summing up speaker counts -- are such
+that no optimizations of any kind have been implemented but it still performs
+well with no UI jank. Not only is the architecture vastly simplified but no
+network latency is incurred since there are no network requests being made,
+aside from those for the tiles themselves which is handled by the frontend
+mapping library, [MapLibre](https://maplibre.org/).
+
+(Note that this idea of "Why not just do it on the frontend?" was inspired by
+[DistrictBuilder](https://github.com/PublicMapping/districtbuilder).)
 
 ### Talk to your users
 
@@ -117,27 +143,6 @@ former coworker of mine. I can muddle through with CSS but I am not great at
 and don't have design sensibility, so enlisting the help of an expert in this
 area was a must. She was good enough to volunteer her time to help out this
 project, and I really appreciate it! Thanks Alex!
-
-### Take advantage of the frontend
-
-When I think of frontend development, I often don't think of CPU-bound tasks.
-Part of this is due to prevalence of I/O-bound CRUD apps out there as well as
-JavaScript's [single-threaded
-nature](https://developer.mozilla.org/en-US/docs/Glossary/Main_thread) (web
-workers can of course be useful here but introduce complexity). However, there
-are excellent use cases for tasks on the frontend that might typically be done
-on the backend.
-
-In the case of this app, the size of the data and the nature of the computation
--- filtering by year and language and summing up speaker counts -- are such
-that no optimizations of any kind have been implemented but it still performs
-well with no UI jank. Not only is the architecture vastly simplified but no
-network latency is incurred since there are no API calls, aside from the
-requests for the tiles themselves which is handled by the frontend mapping
-library, [MapLibre](https://maplibre.org/).
-
-(Note that this idea of "Why not just do it on the frontend?" was inspired by
-[DistrictBuilder](https://github.com/PublicMapping/districtbuilder).)
 
 ### Domain knowledge/familiarity with ecosystem & tools is extremely valuable
 
@@ -190,12 +195,11 @@ the app because of it being fairly reasonably structured/commented.
 I loved working on this project and am super happy with how it has turned out
 so far. I may very well come back to it again in the future with more feature
 enhancements (eg. showing changes to speaker counts for a given language over
-time sounds very cool to me)!
+time)!
 
 If you haven't yet, please take it for a spin:
 
 [https://languagemap.us](https://languagemap.us)
 
-If you have any feedback/bug reports/suggestions, please create an issue on the GitHub repo:
-
-[https://github.com/pcaisse/language-map-us](https://github.com/pcaisse/language-map-us)
+If you have any feedback/bug reports/suggestions, please create an issue on the
+[GitHub repo](https://github.com/pcaisse/language-map-us).
