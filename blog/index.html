@@ -5,8 +5,8 @@ layout: default
 <div class="article-list">
   {% for post in paginator.posts %}
   <a href="{{post.url | prepend: site.baseurl}}"
-    ><h2 class="post-headline">{{post.title}}</h2>
-    <span class="post-subtitle">{{post.subtitle}}</span></a
+    ><h2 class="post-preview-headline">{{post.title}}</h2>
+    <span class="post-preview-subtitle">{{post.subtitle}}</span></a
   >
   <p>{{post.excerpt | strip_html}}</p>
   {% endfor %}

@@ -106,7 +106,6 @@ blockquote {
   font-style: italic;
 }
 
-
 .headline, .post-headline {
   font-size: 2em;
   margin-bottom: -0.4em;
@@ -123,6 +122,25 @@ blockquote {
 
   @include media-query($on-palm) {
     font-size: 1.5em;
+  }
+}
+
+.post-preview-headline {
+  font-size: 1.3em;
+  margin-bottom: -0.3em;
+
+  @include media-query($on-palm) {
+    font-size: 1.3em;
+  }
+}
+
+.post-preview-subtitle {
+  font-size: 1.1em;
+  margin-top: -0.3em;
+  margin-bottom: -0.3em;
+
+  @include media-query($on-palm) {
+    font-size: 1.1em;
   }
 }
 
