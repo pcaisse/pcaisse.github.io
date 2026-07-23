@@ -9,7 +9,7 @@ published: true
 
 I'm Peter, a software developer based in the Philadelphia area.
 
-I have 12+ years of experience in full-stack web development with deep knowledge
+I have 15 years of experience in full-stack web development with deep knowledge
 of JavaScript/TypeScript and extensive professional experience in Python. My current favorite
 language is Rust.
 
